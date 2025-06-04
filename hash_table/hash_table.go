@@ -1,4 +1,4 @@
-package main
+package hashtable
 
 // findDifference solves the problem described at: https://leetcode.com/problems/find-the-difference-of-two-arrays/
 func findDifference(nums1 []int, nums2 []int) [][]int {
