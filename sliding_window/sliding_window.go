@@ -27,3 +27,32 @@ func lengthOfLongestSubstring(s string) int {
 
 	return maxlen
 }
+
+// Hi, here's your problem today. This problem was recently asked by Amazon:
+// You are given a string s, and an integer k. Return the length of the longest substring in s that contains at most k distinct characters.
+// For instance, given the string:
+// aabcdefff and k = 3, then the longest substring with 3 distinct characters would be defff. The answer should be 5.
+func longestSubstringWithKDistinctCharacter(s string, k int) int {
+	if k == 0 || len(s) == 0 {
+		return 0
+	}
+
+	m := make(map[byte]int)
+	ml := 0
+
+	for l, r := 0, 0; r < len(s); r++ {
+		m[s[r]]++
+
+		for len(m) > k {
+			m[s[l]]--
+			if m[s[l]] == 0 {
+				delete(m, s[l])
+			}
+			l++
+		}
+
+		ml = max(ml, r-l+1)
+	}
+
+	return ml
+}
