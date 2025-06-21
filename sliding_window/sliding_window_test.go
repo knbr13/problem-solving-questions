@@ -45,22 +45,25 @@ func TestLongestSubstringWithKDistinctCharacter(t *testing.T) {
 		{"Single character", "a", 1, 1},
 		{"String length less than k", "abc", 5, 3},
 
-		{"K=1, single character repeated", "aaaaa", 1, 5},
-		{"K=1, multiple characters", "abcde", 1, 1},
-		{"K=1, mixed repeated characters", "aabbbccc", 1, 3},
+		{"k=0, basic input", "abcdefg", 0, 0},
+		{"k=0, empty string as an input", "", 0, 0},
 
-		{"K=2, two characters repeated", "aabb", 2, 4},
-		{"K=2, more than two distinct characters", "aabbc", 2, 4},
-		{"K=2, alternating characters", "abababa", 2, 7},
-		{"K=2, complex pattern", "aabcbaa", 2, 3},
+		{"k=1, single character repeated", "aaaaa", 1, 5},
+		{"k=1, multiple characters", "abcde", 1, 1},
+		{"k=1, mixed repeated characters", "aabbbccc", 1, 3},
 
-		{"K=3, exactly three distinct characters", "abcabcabc", 3, 9},
-		{"K=3, more than three distinct characters", "abcdefg", 3, 3},
-		{"K=3, repeated characters", "aaabbbccc", 3, 9},
-		{"K=3, complex pattern", "abcbcbade", 3, 7},
+		{"k=2, two characters repeated", "aabb", 2, 4},
+		{"k=2, more than two distinct characters", "aabbc", 2, 4},
+		{"k=2, alternating characters", "abababa", 2, 7},
+		{"k=2, complex pattern", "aabcbaa", 2, 3},
 
-		{"K=5, string with exactly 5 distinct chars", "abcdeabcde", 5, 10},
-		{"K=10, string with fewer distinct chars", "abcdefgabc", 10, 10},
+		{"k=3, exactly three distinct characters", "abcabcabc", 3, 9},
+		{"k=3, more than three distinct characters", "abcdefg", 3, 3},
+		{"k=3, repeated characters", "aaabbbccc", 3, 9},
+		{"k=3, complex pattern", "abcbcbade", 3, 7},
+
+		{"k=5, string with exactly 5 distinct chars", "abcdeabcde", 5, 10},
+		{"k=10, string with fewer distinct chars", "abcdefgabc", 10, 10},
 
 		{"Distinct characters at the end", "aaaabcde", 3, 6},
 		{"Distinct characters at the beginning", "abcdeaaa", 3, 5},
@@ -70,7 +73,7 @@ func TestLongestSubstringWithKDistinctCharacter(t *testing.T) {
 		{"Complex pattern 2", "ccaabbb", 2, 5},
 		{"Complex pattern 3", "aabbcc", 3, 6},
 		{"Complex pattern 4", "abaccc", 2, 4},
-		{"chatgpt", "abcadcacacaca", 3, 11},
+		{"added by chatgpt", "abcadcacacaca", 3, 11},
 	}
 
 	for _, tt := range tests {
