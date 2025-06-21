@@ -32,3 +32,56 @@ func TestLengthOfLongestSubstring(t *testing.T) {
 		})
 	}
 }
+
+func TestLongestSubstringWithKDistinctCharacter(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    string
+		k        int
+		expected int
+	}{
+		{"Example from problem", "aabcdefff", 3, 5},
+		{"Empty string", "", 3, 0},
+		{"Single character", "a", 1, 1},
+		{"String length less than k", "abc", 5, 3},
+
+		{"k=0, basic input", "abcdefg", 0, 0},
+		{"k=0, empty string as an input", "", 0, 0},
+
+		{"k=1, single character repeated", "aaaaa", 1, 5},
+		{"k=1, multiple characters", "abcde", 1, 1},
+		{"k=1, mixed repeated characters", "aabbbccc", 1, 3},
+
+		{"k=2, two characters repeated", "aabb", 2, 4},
+		{"k=2, more than two distinct characters", "aabbc", 2, 4},
+		{"k=2, alternating characters", "abababa", 2, 7},
+		{"k=2, complex pattern", "aabcbaa", 2, 3},
+
+		{"k=3, exactly three distinct characters", "abcabcabc", 3, 9},
+		{"k=3, more than three distinct characters", "abcdefg", 3, 3},
+		{"k=3, repeated characters", "aaabbbccc", 3, 9},
+		{"k=3, complex pattern", "abcbcbade", 3, 7},
+
+		{"k=5, string with exactly 5 distinct chars", "abcdeabcde", 5, 10},
+		{"k=10, string with fewer distinct chars", "abcdefgabc", 10, 10},
+
+		{"Distinct characters at the end", "aaaabcde", 3, 6},
+		{"Distinct characters at the beginning", "abcdeaaa", 3, 5},
+		{"Distinct characters in the middle", "aaabcdeaa", 3, 5},
+
+		{"Complex pattern 1", "eceba", 2, 3},
+		{"Complex pattern 2", "ccaabbb", 2, 5},
+		{"Complex pattern 3", "aabbcc", 3, 6},
+		{"Complex pattern 4", "abaccc", 2, 4},
+		{"added by chatgpt", "abcadcacacaca", 3, 11},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := longestSubstringWithKDistinctCharacter(tt.input, tt.k)
+			if result != tt.expected {
+				t.Errorf("For input %q with k=%d, expected %d, but got %d", tt.input, tt.k, tt.expected, result)
+			}
+		})
+	}
+}
