@@ -1,6 +1,8 @@
 package hashtable
 
-import "sort"
+import (
+	"slices"
+)
 
 // findDifference solves the problem described at: https://leetcode.com/problems/find-the-difference-of-two-arrays/
 func findDifference(nums1 []int, nums2 []int) [][]int {
@@ -87,8 +89,8 @@ func closeStrings(word1, word2 string) bool {
 		arr2 = append(arr2, m2[k])
 	}
 
-	sort.Ints(arr1)
-	sort.Ints(arr2)
+	slices.Sort(arr1)
+	slices.Sort(arr2)
 
 	for i := 0; i < len(arr1); i++ {
 		if arr1[i] != arr2[i] {
