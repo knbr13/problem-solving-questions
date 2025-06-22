@@ -1,9 +1,6 @@
 package hashtable
 
-import (
-	"reflect"
-	"sort"
-)
+import "sort"
 
 // findDifference solves the problem described at: https://leetcode.com/problems/find-the-difference-of-two-arrays/
 func findDifference(nums1 []int, nums2 []int) [][]int {
@@ -55,54 +52,61 @@ func uniqueOccurrences(arr []int) bool {
 }
 
 // closeStrings solves the problem described at: https://leetcode.com/problems/determine-if-two-strings-are-close/
-func closeStrings(word1 string, word2 string) bool {
+func closeStrings(word1, word2 string) bool {
 	if len(word1) != len(word2) {
 		return false
 	}
-	m1 := map[rune]int{}
-	for _, v := range word1 {
-		m1[v]++
+
+	m1 := map[byte]int{}
+	m2 := map[byte]int{}
+
+	for i := 0; i < len(word1); i++ {
+		m1[word1[i]]++
+		m2[word2[i]]++
 	}
-	m2 := map[rune]int{}
-	for _, v := range word2 {
-		m2[v]++
-	}
-	if reflect.DeepEqual(m1, m2) {
-		return true
-	}
+
 	if len(m1) != len(m2) {
 		return false
 	}
 
-	arr1 := make([]int, 0, len(m1))
-	for _, v := range m1 {
-		arr1 = append(arr1, v)
+	if equalMaps(m1, m2) {
+		return true
 	}
+
+	for k := range m1 {
+		if _, ok := m2[k]; !ok {
+			return false
+		}
+	}
+
+	arr1 := make([]int, 0, len(m1))
 	arr2 := make([]int, 0, len(m2))
-	for _, v := range m2 {
-		arr2 = append(arr2, v)
+
+	for k := range m1 {
+		arr1 = append(arr1, m1[k])
+		arr2 = append(arr2, m2[k])
 	}
 
 	sort.Ints(arr1)
 	sort.Ints(arr2)
 
-	for i := range arr1 {
+	for i := 0; i < len(arr1); i++ {
 		if arr1[i] != arr2[i] {
 			return false
 		}
 	}
 
-	arr3 := make([]int, 0, len(m1))
-	for k := range m1 {
-		arr3 = append(arr3, int(k))
-	}
-	arr4 := make([]int, 0, len(m2))
-	for k := range m2 {
-		arr4 = append(arr4, int(k))
+	return true
+}
+
+// equalMaps is a simple helper function to compare maps
+func equalMaps(m1, m2 map[byte]int) bool {
+	for k, v := range m1 {
+		v2 := m2[k]
+		if v != v2 {
+			return false
+		}
 	}
 
-	sort.Ints(arr3)
-	sort.Ints(arr4)
-
-	return reflect.DeepEqual(arr3, arr4)
+	return true
 }
