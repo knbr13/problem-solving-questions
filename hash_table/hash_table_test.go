@@ -115,3 +115,76 @@ func TestUniqueOccurrences(t *testing.T) {
 		})
 	}
 }
+
+func TestCloseStrings(t *testing.T) {
+	tests := []struct {
+		name   string
+		word1  string
+		word2  string
+		expect bool
+	}{
+		{
+			name:   "identical single char",
+			word1:  "a",
+			word2:  "a",
+			expect: true,
+		},
+		{
+			name:   "simple anagram",
+			word1:  "abc",
+			word2:  "bca",
+			expect: true,
+		},
+		{
+			name:   "different length",
+			word1:  "a",
+			word2:  "aa",
+			expect: false,
+		},
+		{
+			name:   "same chars different freqs but transformable",
+			word1:  "aabbcc",
+			word2:  "bbccaa",
+			expect: true,
+		},
+		{
+			name:   "same freq multichar groups",
+			word1:  "abbccc",
+			word2:  "cccbba",
+			expect: true,
+		},
+		{
+			name:   "mismatched char sets",
+			word1:  "aabb",
+			word2:  "aabc",
+			expect: false,
+		},
+		{
+			name:   "disjoint char sets",
+			word1:  "abc",
+			word2:  "def",
+			expect: false,
+		},
+		{
+			name:   "complex transform",
+			word1:  "cabbba",
+			word2:  "abbccc",
+			expect: true,
+		},
+		{
+			name:   "single char to multichar not transformable",
+			word1:  "a",
+			word2:  "b",
+			expect: false,
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			got := closeStrings(tc.word1, tc.word2)
+			if got != tc.expect {
+				t.Errorf("closeStrings(%q, %q) = %v; want %v", tc.word1, tc.word2, got, tc.expect)
+			}
+		})
+	}
+}
