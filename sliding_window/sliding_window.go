@@ -37,22 +37,22 @@ func longestSubstringWithKDistinctCharacter(s string, k int) int {
 		return 0
 	}
 
-	m := make(map[byte]int)
-	ml := 0
+	countMap := make(map[byte]int)
+	maxLen := 0
 
-	for l, r := 0, 0; r < len(s); r++ {
-		m[s[r]]++
+	for left, right := 0, 0; right < len(s); right++ {
+		countMap[s[right]]++
 
-		for len(m) > k {
-			m[s[l]]--
-			if m[s[l]] == 0 {
-				delete(m, s[l])
+		for len(countMap) > k {
+			countMap[s[left]]--
+			if countMap[s[left]] == 0 {
+				delete(countMap, s[left])
 			}
-			l++
+			left++
 		}
 
-		ml = max(ml, r-l+1)
+		maxLen = max(maxLen, right-left+1)
 	}
 
-	return ml
+	return maxLen
 }
